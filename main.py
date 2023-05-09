@@ -37,12 +37,6 @@ base_inicial = pd.read_csv('news_headlines.csv')
 #PADRONIZAR DATAFRAME
 base_treino = base_inicial.rename(columns={'tags':'label','post':'text'})
 
-
-# #PLOTLY
-# fig = px.pie(base_treino , values = 'label' ,names = 'text', title = '%Distribuição de Categorias' )
-# fig.show=()
-
-
 #EXIBIR QTD DE REGISTRO
 print(f'Qtd de Registro: {len(base_treino)}')
 
@@ -85,34 +79,9 @@ def pre_processamento(texto):
     texto_processado = ' '.join(tokens)
     return texto_processado
 
-base_treino['']
-
-
-
-Re
-
-
-#PRE PROCESSAMENTOS
-def pre_processamento(texto):
-    # LOWER text
-    base_treino['text'] = base_treino['text'].apply(lambda row: row.lower())
-    #PONTUAÇÃO --> remove todos as pontuações dos textos
-    base_treino['text'] = base_treino['text'].apply(
-        lambda row: re.sub(r'[^a-zA-Z]+', " ", row))
-    #TOKEN --> dividir frases em palavras ou tokens individuais
-    base_treino['text'] = base_treino['text'].apply(lambda row: word_tokenize(row))
-    #REMOVE STOPWORDS - remove as palavras mais comuns e sem significado do texto
-    base_treino['text'] = base_treino['text'].apply(
-        lambda row: [word for word in row if word not in set(stopwords.words('portuguese'))])
-    #LEMMATIZA
-    base_treino['text'] = base_treino['text'].apply(
-        lambda row: " ".join([WordNetLemmatizer ().lemmatize(word) for word in row])
-        )
-    
-
+ 
 #APLICANDO O PRE PROCESSAMENTO NA BASE INICIAL
 base_treino['texto_processado'] = base_treino['text'].apply(pre_processamento)
-
 
 #NUVEM DE PALAVRAS APÓS PRÉ PROCESSAMENTO
 wc = WordCloud(background_color =  'white')
